@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Daktyloi — IA Privada para Empresas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;transition:background .3s,border-color .3s,backdrop-filter .3s}
+#nav.scrolled{background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07)}
+.nav-inner{max-width:1140px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo span{font-weight:800;font-size:18px;letter-spacing:-.5px;color:#fff;transition:color .3s}
+#nav.scrolled .nav-logo span{color:#1a1a2e}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-link{background:none;border:none;font-size:14px;font-weight:500;color:rgba(255,255,255,.85);padding:6px 12px;border-radius:6px;transition:color .3s}
+#nav.scrolled .nav-link{color:#444}
+.nav-cta{background:#e8c840;color:#1a1a2e;border:none;border-radius:8px;padding:9px 20px;font-size:14px;font-weight:700}
+.nav-cta:hover{background:#d4b430}
+
+/* HERO */
+#hero{min-height:100vh;background:linear-gradient(135deg,#0d0d1a 0%,#1a1a2e 50%,#16213e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 6rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;opacity:.07;background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:60px 60px}
+.hero-orb1{position:absolute;top:20%;left:15%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(232,200,64,.15) 0%,transparent 70%);pointer-events:none}
+.hero-orb2{position:absolute;bottom:25%;right:10%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(52,100,219,.12) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;max-width:860px;margin:0 auto}
+.hero-badge{display:inline-block;background:rgba(232,200,64,.15);border:1px solid rgba(232,200,64,.35);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:#e8c840;margin-bottom:2rem;letter-spacing:.5px}
+.hero-h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;color:#fff;line-height:1.12;margin-bottom:1.5rem;letter-spacing:-2px}
+.hero-h1 span{color:#e8c840}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:rgba(255,255,255,.65);max-width:600px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:#e8c840;color:#1a1a2e;border:none;border-radius:10px;padding:16px 32px;font-size:16px;font-weight:700;box-shadow:0 0 32px rgba(232,200,64,.3)}
+.btn-primary:hover{background:#d4b430}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:16px 32px;font-size:16px}
+.btn-ghost:hover{background:rgba(255,255,255,.05)}
+.hero-stats{margin-top:4rem;display:flex;gap:3rem;justify-content:center;flex-wrap:wrap}
+.hero-stat-val{font-size:1.8rem;font-weight:800;color:#e8c840;line-height:1}
+.hero-stat-lbl{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+
+/* SECTIONS */
+section{padding:6rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-inner-md{max-width:900px;margin:0 auto}
+.section-inner-sm{max-width:860px;margin:0 auto}
+.section-label{font-size:12px;font-weight:700;letter-spacing:2px;color:#888;text-transform:uppercase}
+.section-h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;margin-top:12px;letter-spacing:-1px}
+.section-sub{color:#555;font-size:16px;max-width:540px;margin:1rem auto 0;line-height:1.7}
+.section-head{text-align:center;margin-bottom:3.5rem}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* DIFFERENTIALS */
+#solucoes{background:#f8f8f6}
+.diff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.diff-card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:14px;padding:2rem 1.75rem;height:100%}
+.diff-icon{font-size:32px;margin-bottom:1rem}
+.diff-title{font-size:17px;font-weight:700;margin-bottom:8px}
+.diff-desc{color:#666;font-size:14px;line-height:1.65}
+
+/* VS TABLE */
+.vs-table-wrap{overflow-x:auto}
+.vs-table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px}
+.vs-table th{padding:12px 16px;font-weight:600;color:#888;border-bottom:2px solid #f0f0f0;text-align:left}
+.vs-table th.dak{font-weight:700;color:#1a1a2e;border-bottom:2px solid #e8c840;background:rgba(232,200,64,.06);text-align:center}
+.vs-table th.ext{text-align:center}
+.vs-table td{padding:14px 16px}
+.vs-table td.ext{text-align:center;color:#888}
+.vs-table td.dak{text-align:center;font-weight:600;color:#2d7a4a;background:rgba(232,200,64,.04)}
+.vs-table tr:nth-child(even){background:#fafafa}
+
+/* SECTORS */
+#setores{background:#f8f8f6}
+.sector-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.sector-card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:12px;padding:1.5rem 1.75rem;display:flex;gap:16px;align-items:flex-start}
+.sector-icon{font-size:28px;line-height:1;flex-shrink:0}
+.sector-title{font-size:15px;font-weight:700;margin-bottom:6px}
+.sector-desc{color:#666;font-size:13.5px;line-height:1.6}
+
+/* PROCESS */
+#processo{background:#fff}
+.process-wrap{position:relative}
+.process-line{position:absolute;left:31px;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,#e8c840,#1a1a2e);border-radius:2px}
+.process-item{display:flex;gap:28px;margin-bottom:2.5rem;position:relative}
+.process-num{width:64px;height:64px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;z-index:1;border:3px solid #1a1a2e;background:#fff;color:#1a1a2e}
+.process-num.first{background:#e8c840;border-color:#e8c840;color:#1a1a2e}
+.process-num.last{background:#1a1a2e;border-color:#1a1a2e;color:#e8c840}
+.process-body{padding-top:12px}
+.process-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.process-title{font-size:18px;font-weight:700}
+.process-dur{font-size:12px;background:#f0f0ea;color:#666;border-radius:20px;padding:3px 10px;font-weight:500}
+.process-desc{color:#666;font-size:15px;line-height:1.65}
+
+/* PLANS */
+#planos{background:#f8f8f6}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.plan-card{border-radius:16px;padding:2.25rem 2rem;display:flex;flex-direction:column;position:relative;overflow:hidden;height:100%}
+.plan-card.normal{background:#fff;border:1px solid rgba(0,0,0,.08)}
+.plan-card.featured{background:#1a1a2e;border:2px solid #e8c840}
+.plan-popular{position:absolute;top:0;right:0;background:#e8c840;color:#1a1a2e;font-size:11px;font-weight:700;padding:5px 14px;border-radius:0 16px 0 8px;letter-spacing:.5px}
+.plan-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.plan-card.normal .plan-tag{color:#aaa}
+.plan-card.featured .plan-tag{color:rgba(255,255,255,.5)}
+.plan-name{font-size:22px;font-weight:800;margin-bottom:4px}
+.plan-card.normal .plan-name{color:#1a1a2e}
+.plan-card.featured .plan-name{color:#fff}
+.plan-price{font-size:26px;font-weight:800;margin-bottom:1rem}
+.plan-card.normal .plan-price{color:#1a1a2e}
+.plan-card.featured .plan-price{color:#e8c840}
+.plan-desc{font-size:14px;line-height:1.6;margin-bottom:1.5rem}
+.plan-card.normal .plan-desc{color:#666}
+.plan-card.featured .plan-desc{color:rgba(255,255,255,.65)}
+.plan-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:auto}
+.plan-list li{display:flex;gap:8px;font-size:13.5px}
+.plan-list li::before{content:'✓';color:#e8c840;font-weight:700;flex-shrink:0}
+.plan-card.normal .plan-list li{color:#444}
+.plan-card.featured .plan-list li{color:rgba(255,255,255,.8)}
+.plan-btn{margin-top:2rem;width:100%;padding:13px;border-radius:8px;font-size:14px;font-weight:700}
+.plan-card.normal .plan-btn{background:transparent;color:#1a1a2e;border:1.5px solid #1a1a2e}
+.plan-card.normal .plan-btn:hover{background:#1a1a2e;color:#fff}
+.plan-card.featured .plan-btn{background:#e8c840;color:#1a1a2e;border:none}
+.plan-card.featured .plan-btn:hover{background:#d4b430}
+
+/* CTA */
+#contato{background:linear-gradient(135deg,#1a1a2e 0%,#0d1b3e 100%);text-align:center}
+.cta-label{color:rgba(255,255,255,.5);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem}
+.cta-h2{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;color:#fff;letter-spacing:-1.5px;margin-bottom:1rem;line-height:1.15}
+.cta-h2 span{color:#e8c840}
+.cta-sub{color:rgba(255,255,255,.55);font-size:16px;max-width:480px;margin:0 auto 2.5rem;line-height:1.7}
+.cta-btn{background:#e8c840;color:#1a1a2e;border:none;border-radius:10px;padding:18px 42px;font-size:17px;font-weight:800;box-shadow:0 0 40px rgba(232,200,64,.25)}
+.cta-btn:hover{background:#d4b430}
+
+/* FOOTER */
+footer{background:#0d0d1a;color:rgba(255,255,255,.35);padding:2.5rem 2rem;text-align:center;font-size:13px}
+.footer-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
+.footer-logo span{font-weight:700;color:rgba(255,255,255,.6)}
+footer p{margin:0 0 4px}
+
+/* MODAL */
+#modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:1000;padding:1rem}
+#modal-overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:2.5rem;width:100%;max-width:480px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.18)}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:#888;line-height:1}
+.modal-progress{display:flex;gap:6px;margin-bottom:2rem}
+.progress-bar{height:3px;flex:1;border-radius:4px;background:#e5e5e5;transition:background .4s}
+.progress-bar.active{background:#1a1a2e}
+.modal-step{display:none}
+.modal-step.active{display:block}
+.modal-h2{font-size:22px;font-weight:700;margin-bottom:.5rem;color:#1a1a2e}
+.modal-sub{color:#666;font-size:14px;margin-bottom:1.5rem}
+.modal-input{width:100%;display:block;margin-bottom:12px;padding:12px 14px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;outline:none;transition:border-color .2s}
+.modal-input:focus{border-color:#1a1a2e}
+.modal-btn{margin-top:1.5rem;width:100%;padding:14px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;transition:background .2s}
+.modal-btn:hover{background:#2d2d4e}
+.modal-btn:disabled{background:#ccc;cursor:default}
+.modal-back{margin-top:.75rem;width:100%;padding:10px;background:none;color:#888;border:1px solid #e0e0e0;border-radius:8px;font-size:14px}
+.modal-back:hover{background:#f5f5f5}
+.modal-success{text-align:center;padding:1rem 0}
+.modal-success-icon{font-size:52px;margin-bottom:1rem}
+.modal-success h2{font-size:22px;font-weight:700;color:#1a1a2e;margin-bottom:.5rem}
+.modal-success p{color:#555;line-height:1.6}
+.modal-success-btn{margin-top:1.5rem;padding:12px 32px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:14px}
+
+@media(max-width:640px){
+  .nav-link{display:none}
+  .hero-stats{gap:2rem}
+  .process-line{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#1a1a2e"/>
+        <path d="M8 24 L12 8 L16 18 L20 12 L24 24" stroke="#e8c840" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="16" cy="18" r="2" fill="#e8c840"/>
+      </svg>
+      <span>Daktyloi</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="scrollTo('solucoes')">Soluções</button>
+      <button class="nav-link" onclick="scrollTo('setores')">Setores</button>
+      <button class="nav-link" onclick="scrollTo('processo')">Processo</button>
+      <button class="nav-link" onclick="scrollTo('planos')">Planos</button>
+      <button class="nav-cta" onclick="openModal()">Falar com especialista</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-inner reveal">
+    <div class="hero-badge">IA PRIVADA · ON-PREMISE · LGPD NATIVA</div>
+    <h1 class="hero-h1">Inteligência Artificial<br><span>sem abrir mão dos seus dados.</span></h1>
+    <p class="hero-sub">Implementamos LLMs privados na infraestrutura da sua empresa. Seus dados permanecem sob seu controle — sem envio a terceiros, sem dependência de nuvem externa.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openModal()">Solicitar diagnóstico gratuito →</button>
+      <button class="btn-ghost" onclick="scrollTo('processo')">Ver como funciona</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-val">100%</div><div class="hero-stat-lbl">Dados on-premise</div></div>
+      <div><div class="hero-stat-val">Zero</div><div class="hero-stat-lbl">Custo por token</div></div>
+      <div><div class="hero-stat-val">5 fases</div><div class="hero-stat-lbl">Metodologia comprovada</div></div>
+      <div><div class="hero-stat-val">6+</div><div class="hero-stat-lbl">Setores atendidos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIALS -->
+<section id="solucoes">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <span class="section-label">Por que Daktyloi</span>
+      <h2 class="section-h2">IA que trabalha para você,<br>não para o fornecedor.</h2>
+      <p class="section-sub">Enquanto plataformas SaaS de IA usam seus dados para melhorar seus modelos, nossa abordagem garante que cada byte permaneça sob seu domínio.</p>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card reveal" style="transition-delay:0ms">
+        <div class="diff-icon">🔒</div>
+        <h3 class="diff-title">Dados nunca saem</h3>
+        <p class="diff-desc">Processamento 100% na sua infraestrutura. Conformidade LGPD nativa.</p>
+      </div>
+      <div class="diff-card reveal" style="transition-delay:80ms">
+        <div class="diff-icon">⚡</div>
+        <h3 class="diff-title">Sem custo por token</h3>
+        <p class="diff-desc">Custo fixo de hardware. Uso ilimitado após amortização.</p>
+      </div>
+      <div class="diff-card reveal" style="transition-delay:160ms">
+        <div class="diff-icon">🎯</div>
+        <h3 class="diff-title">IA do seu domínio</h3>
+        <p class="diff-desc">Fine-tuning e RAG com dados internos superam LLMs genéricos em tarefas específicas.</p>
+      </div>
+      <div class="diff-card reveal" style="transition-delay:240ms">
+        <div class="diff-icon">🔧</div>
+        <h3 class="diff-title">Stack 100% auditável</h3>
+        <p class="diff-desc">Open-source, sem caixas-pretas. Cada componente é inspecionável e controlado por você.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VS TABLE -->
+<section style="padding:5rem 2rem;background:#fff">
+  <div class="section-inner-sm">
+    <div class="section-head reveal">
+      <h2 class="section-h2">IA terceirizada <span style="color:#ccc">vs.</span> Daktyloi</h2>
+    </div>
+    <div class="reveal vs-table-wrap">
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="ext">ChatGPT / APIs externas</th>
+            <th class="dak">Daktyloi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Seus dados ficam com você</td><td class="ext">✗ Enviados a servidores externos</td><td class="dak">✓ 100% on-premise</td></tr>
+          <tr><td>Conformidade LGPD/GDPR</td><td class="ext">⚠ Depende do contrato</td><td class="dak">✓ Controle total</td></tr>
+          <tr><td>Custo de uso</td><td class="ext">Por token — cresce com volume</td><td class="dak">Custo fixo de infra</td></tr>
+          <tr><td>Customização do modelo</td><td class="ext">⚠ Limitada</td><td class="dak">✓ Fine-tuning completo</td></tr>
+          <tr><td>Disponibilidade</td><td class="ext">Depende da internet</td><td class="dak">✓ SLA interno 99.9%</td></tr>
+          <tr><td>Integração com sistemas legados</td><td class="ext">Via API exposta</td><td class="dak">✓ Conexão direta interna</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section id="setores">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <span class="section-label">Setores</span>
+      <h2 class="section-h2">Especialização por vertical.</h2>
+    </div>
+    <div class="sector-grid">
+      <div class="sector-card reveal" style="transition-delay:0ms"><span class="sector-icon">🏥</span><div><h3 class="sector-title">Saúde</h3><p class="sector-desc">Prontuários, laudos e triagem com total conformidade LGPD/CFM. Dados clínicos jamais saem da sua rede.</p></div></div>
+      <div class="sector-card reveal" style="transition-delay:60ms"><span class="sector-icon">⚖️</span><div><h3 class="sector-title">Jurídico</h3><p class="sector-desc">Análise de contratos, revisão de minutas e busca em jurisprudência interna com confidencialidade absoluta.</p></div></div>
+      <div class="sector-card reveal" style="transition-delay:120ms"><span class="sector-icon">🏭</span><div><h3 class="sector-title">Indústria</h3><p class="sector-desc">Diagnóstico de falhas, manuais técnicos e ordens de serviço automatizadas diretamente no ERP da planta.</p></div></div>
+      <div class="sector-card reveal" style="transition-delay:180ms"><span class="sector-icon">🏦</span><div><h3 class="sector-title">Financeiro</h3><p class="sector-desc">Compliance, KYC e análise de crédito sob regulação Bacen/CVM sem envio de dados a terceiros.</p></div></div>
+      <div class="sector-card reveal" style="transition-delay:240ms"><span class="sector-icon">🏛️</span><div><h3 class="sector-title">Governo</h3><p class="sector-desc">Processos internos e atendimento ao cidadão com soberania de dados garantida por lei.</p></div></div>
+      <div class="sector-card reveal" style="transition-delay:300ms"><span class="sector-icon">📚</span><div><h3 class="sector-title">Educação Corporativa</h3><p class="sector-desc">Assistentes de onboarding, treinamentos e bases de conhecimento 100% customizadas para sua organização.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="processo" style="background:#fff">
+  <div class="section-inner-md">
+    <div class="section-head reveal">
+      <span class="section-label">Metodologia</span>
+      <h2 class="section-h2">Do diagnóstico à operação.</h2>
+    </div>
+    <div class="process-wrap">
+      <div class="process-line"></div>
+      <div class="process-item reveal" style="transition-delay:0ms">
+        <div class="process-num first">01</div>
+        <div class="process-body"><div class="process-head"><span class="process-title">Discovery</span><span class="process-dur">1–2 sem</span></div><p class="process-desc">Mapeamos sua infraestrutura, casos de uso prioritários e requisitos de conformidade.</p></div>
+      </div>
+      <div class="process-item reveal" style="transition-delay:100ms">
+        <div class="process-num">02</div>
+        <div class="process-body"><div class="process-head"><span class="process-title">Arquitetura</span><span class="process-dur">1–2 sem</span></div><p class="process-desc">Definimos modelos, ambiente de deploy e configurações de segurança para o seu contexto.</p></div>
+      </div>
+      <div class="process-item reveal" style="transition-delay:200ms">
+        <div class="process-num">03</div>
+        <div class="process-body"><div class="process-head"><span class="process-title">IA Customizada</span><span class="process-dur">2–4 sem</span></div><p class="process-desc">Fine-tuning e RAG com dados internos da sua organização. Modelo aprende o seu negócio.</p></div>
+      </div>
+      <div class="process-item reveal" style="transition-delay:300ms">
+        <div class="process-num">04</div>
+        <div class="process-body"><div class="process-head"><span class="process-title">Go-Live</span><span class="process-dur">1–2 sem</span></div><p class="process-desc">Integração com sistemas existentes, treinamento de equipes e handoff completo com documentação.</p></div>
+      </div>
+      <div class="process-item reveal" style="transition-delay:400ms">
+        <div class="process-num last">05</div>
+        <div class="process-body"><div class="process-head"><span class="process-title">Suporte Contínuo</span><span class="process-dur">Ongoing</span></div><p class="process-desc">Evolução de casos de uso, atualização de modelos e SLA garantido — sem dependência de nuvem.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="planos">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <span class="section-label">Investimento</span>
+      <h2 class="section-h2">Modelo transparente, sem surpresas.</h2>
+      <p class="section-sub">Valores indicativos. Cada proposta é customizada para o seu contexto.</p>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-card normal reveal" style="transition-delay:0ms">
+        <div class="plan-tag">Projeto</div>
+        <h3 class="plan-name">Discovery</h3>
+        <div class="plan-price">R$ 15–35k</div>
+        <p class="plan-desc">Diagnóstico técnico completo com relatório e plano de ação. Ideal para validar o fit.</p>
+        <ul class="plan-list">
+          <li>Inventário de infraestrutura</li>
+          <li>Benchmark de modelos</li>
+          <li>Plano de implementação</li>
+          <li>Análise de conformidade</li>
+        </ul>
+        <button class="plan-btn" onclick="openModal()">Solicitar diagnóstico</button>
+      </div>
+      <div class="plan-card featured reveal" style="transition-delay:80ms">
+        <div class="plan-popular">MAIS POPULAR</div>
+        <div class="plan-tag">Projeto</div>
+        <h3 class="plan-name">Implantação</h3>
+        <div class="plan-price">R$ 60–180k</div>
+        <p class="plan-desc">Deploy completo da plataforma de IA privada — do servidor ao usuário final.</p>
+        <ul class="plan-list">
+          <li>Fork privado por cliente</li>
+          <li>Fine-tuning e RAG</li>
+          <li>Interface white-label</li>
+          <li>Treinamento de equipes</li>
+        </ul>
+        <button class="plan-btn" onclick="openModal()">Falar com consultor</button>
+      </div>
+      <div class="plan-card normal reveal" style="transition-delay:160ms">
+        <div class="plan-tag">Recorrente</div>
+        <h3 class="plan-name">Managed</h3>
+        <div class="plan-price">R$ 5–30k/mês</div>
+        <p class="plan-desc">Operação contínua, evolução de modelos e suporte dedicado para crescer sem riscos.</p>
+        <ul class="plan-list">
+          <li>SLA Standard (8×5) ou Premium (24×7)</li>
+          <li>Atualizações de modelos</li>
+          <li>Novos casos de uso</li>
+          <li>Relatórios mensais de ROI</li>
+        </ul>
+        <button class="plan-btn" onclick="openModal()">Ver planos</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contato">
+  <div class="reveal">
+    <p class="cta-label">Pronto para começar?</p>
+    <h2 class="cta-h2">Diagnóstico gratuito.<br><span>Sem compromisso.</span></h2>
+    <p class="cta-sub">Em uma conversa de 30 minutos, nossos especialistas avaliam se a IA privada faz sentido para o seu contexto — e como.</p>
+    <button class="cta-btn" onclick="openModal()">Agendar conversa →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#e8c840"/>
+      <path d="M8 24 L12 8 L16 18 L20 12 L24 24" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span>Daktyloi</span>
+  </div>
+  <p>Consultoria em IA Privada · São Paulo, Brasil</p>
+  <p>© 2025 Daktyloi. Todos os direitos reservados.</p>
+</footer>
+
+<!-- MODAL -->
+<div id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <!-- Step 1 -->
+    <div class="modal-step active" id="step1">
+      <div class="modal-progress">
+        <div class="progress-bar active" id="pb1"></div>
+        <div class="progress-bar" id="pb2"></div>
+      </div>
+      <h2 class="modal-h2">Fale com a Daktyloi</h2>
+      <p class="modal-sub">Nosso time de especialistas retorna em até 24h.</p>
+      <input class="modal-input" type="text" id="f-name" placeholder="Nome completo" oninput="checkStep1()"/>
+      <input class="modal-input" type="text" id="f-company" placeholder="Empresa" oninput="checkStep1()"/>
+      <input class="modal-input" type="email" id="f-email" placeholder="E-mail corporativo" oninput="checkStep1()"/>
+      <button class="modal-btn" id="btn-next" onclick="goStep2()" disabled>Continuar →</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="modal-step" id="step2">
+      <div class="modal-progress">
+        <div class="progress-bar active"></div>
+        <div class="progress-bar active"></div>
+      </div>
+      <h2 class="modal-h2" style="font-size:20px">Conte-nos seu contexto</h2>
+      <p class="modal-sub">Isso nos ajuda a preparar uma conversa mais precisa.</p>
+      <select class="modal-input" id="f-sector" onchange="checkStep2()">
+        <option value="">Setor da empresa</option>
+        <option>Saúde</option><option>Jurídico</option><option>Financeiro</option>
+        <option>Indústria</option><option>Governo</option><option>Educação</option><option>Outro</option>
+      </select>
+      <textarea class="modal-input" id="f-challenge" rows="4" placeholder="Qual o principal desafio que você quer resolver com IA?" oninput="checkStep2()" style="resize:vertical"></textarea>
+      <button class="modal-btn" id="btn-send" onclick="goSuccess()" disabled>Enviar mensagem</button>
+      <button class="modal-back" onclick="goStep1()">← Voltar</button>
+    </div>
+
+    <!-- Success -->
+    <div class="modal-step" id="step-success">
+      <div class="modal-success">
+        <div class="modal-success-icon">✓</div>
+        <h2>Mensagem recebida!</h2>
+        <p>Nossa equipe entrará em contato em até <strong>24 horas úteis</strong>. Verifique seu e-mail <strong id="confirm-email"></strong>.</p>
+        <button class="modal-success-btn" onclick="closeModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Scroll nav
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Smooth scroll
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Modal
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  goStep1();
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function showStep(id) {
+  document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goStep1() { showStep('step1'); checkStep1(); }
+function goStep2() { showStep('step2'); checkStep2(); }
+function goSuccess() {
+  document.getElementById('confirm-email').textContent = document.getElementById('f-email').value;
+  showStep('step-success');
+}
+
+function checkStep1() {
+  const ok = document.getElementById('f-name').value.trim() &&
+             document.getElementById('f-company').value.trim() &&
+             document.getElementById('f-email').value.trim();
+  document.getElementById('btn-next').disabled = !ok;
+}
+function checkStep2() {
+  const ok = document.getElementById('f-sector').value &&
+             document.getElementById('f-challenge').value.trim();
+  document.getElementById('btn-send').disabled = !ok;
+}
+
+// Hero reveal on load
+window.addEventListener('load', () => {
+  document.querySelector('#hero .reveal').classList.add('visible');
+});
+</script>
+</body>
+</html>
