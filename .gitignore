@@ -1,5 +1,5 @@
 # EmailJS local credentials
-email.js
+email.config.js
 
 # Environment files
 .env
