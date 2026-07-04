@@ -1,0 +1,7 @@
+# EmailJS local credentials
+email.js
+
+# Environment files
+.env
+.env.*
+!.env.example

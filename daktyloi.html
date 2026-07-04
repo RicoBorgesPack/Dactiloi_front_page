@@ -169,6 +169,7 @@ footer p{margin:0 0 4px}
 .modal-success h2{font-size:22px;font-weight:700;color:#1a1a2e;margin-bottom:.5rem}
 .modal-success p{color:#555;line-height:1.6}
 .modal-success-btn{margin-top:1.5rem;padding:12px 32px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:14px}
+.modal-status{min-height:20px;margin-top:12px;color:#b3261e;font-size:13px;line-height:1.5}
 
 @media(max-width:640px){
   .nav-link{display:none}
@@ -343,7 +344,7 @@ footer p{margin:0 0 4px}
     </div>
     <div class="plans-grid">
       <div class="plan-card normal reveal" style="transition-delay:0ms">
-        <div class="plan-tag">Projeto</div>
+        <div class="plan-tag">Infraestrutura</div>
         <p class="plan-desc">Diagnóstico técnico completo com relatório e plano de ação. Ideal para validar o fit.</p>
         <ul class="plan-list">
           <li>Inventário de infraestrutura</li>
@@ -353,8 +354,7 @@ footer p{margin:0 0 4px}
         </ul>
       </div>
       <div class="plan-card featured reveal" style="transition-delay:80ms">
-        <div class="plan-popular">MAIS POPULAR</div>
-        <div class="plan-tag">Projeto</div>
+        <div class="plan-tag">Treinamento</div>
         <p class="plan-desc">Deploy completo da plataforma de IA privada — do servidor ao usuário final.</p>
         <ul class="plan-list">
           <li>Fork privado por cliente</li>
@@ -374,6 +374,7 @@ footer p{margin:0 0 4px}
         </ul>
       </div>
     </div>
+    <button class="plan-btn" onclick="openModal()">Solicitar diagnóstico</button>
   </div>
 </section>
 
@@ -405,6 +406,8 @@ footer p{margin:0 0 4px}
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
 
+    <form id="lead-form" onsubmit="sendContactForm(event)">
+
     <!-- Step 1 -->
     <div class="modal-step active" id="step1">
       <div class="modal-progress">
@@ -413,10 +416,10 @@ footer p{margin:0 0 4px}
       </div>
       <h2 class="modal-h2">Fale com a Daktyloi</h2>
       <p class="modal-sub">Nosso time de especialistas retorna em até 24h.</p>
-      <input class="modal-input" type="text" id="f-name" placeholder="Nome completo" oninput="checkStep1()"/>
-      <input class="modal-input" type="text" id="f-company" placeholder="Empresa" oninput="checkStep1()"/>
-      <input class="modal-input" type="email" id="f-email" placeholder="E-mail corporativo" oninput="checkStep1()"/>
-      <button class="modal-btn" id="btn-next" onclick="goStep2()" disabled>Continuar →</button>
+      <input class="modal-input" type="text" id="f-name" name="name" placeholder="Nome completo" autocomplete="name" oninput="checkStep1()"/>
+      <input class="modal-input" type="email" id="f-email" name="email" placeholder="E-mail corporativo" autocomplete="email" oninput="checkStep1()"/>
+      <input class="modal-input" type="tel" id="f-phone" name="phone" placeholder="Telefone" autocomplete="tel" oninput="checkStep1()"/>
+      <button class="modal-btn" type="button" id="btn-next" onclick="goStep2()" disabled>Continuar</button>
     </div>
 
     <!-- Step 2 -->
@@ -427,14 +430,16 @@ footer p{margin:0 0 4px}
       </div>
       <h2 class="modal-h2" style="font-size:20px">Conte-nos seu contexto</h2>
       <p class="modal-sub">Isso nos ajuda a preparar uma conversa mais precisa.</p>
+      <input class="modal-input" type="text" id="f-company" name="company" placeholder="Empresa" autocomplete="organization"/>
       <select class="modal-input" id="f-sector" onchange="checkStep2()">
         <option value="">Setor da empresa</option>
         <option>Saúde</option><option>Jurídico</option><option>Financeiro</option>
         <option>Indústria</option><option>Governo</option><option>Educação</option><option>Outro</option>
       </select>
-      <textarea class="modal-input" id="f-challenge" rows="4" placeholder="Qual o principal desafio que você quer resolver com IA?" oninput="checkStep2()" style="resize:vertical"></textarea>
-      <button class="modal-btn" id="btn-send" onclick="goSuccess()" disabled>Enviar mensagem</button>
-      <button class="modal-back" onclick="goStep1()">← Voltar</button>
+      <textarea class="modal-input" id="f-message" name="message" rows="4" placeholder="Mensagem" oninput="checkStep2()" style="resize:vertical"></textarea>
+      <button class="modal-btn" type="submit" id="btn-send" disabled>Enviar mensagem</button>
+      <p class="modal-status" id="form-status" aria-live="polite"></p>
+      <button class="modal-back" type="button" onclick="goStep1()">Voltar</button>
     </div>
 
     <!-- Success -->
@@ -443,12 +448,15 @@ footer p{margin:0 0 4px}
         <div class="modal-success-icon">✓</div>
         <h2>Mensagem recebida!</h2>
         <p>Nossa equipe entrará em contato em até <strong>24 horas úteis</strong>. Verifique seu e-mail <strong id="confirm-email"></strong>.</p>
-        <button class="modal-success-btn" onclick="closeModal()">Fechar</button>
+        <button class="modal-success-btn" type="button" onclick="closeModal()">Fechar</button>
       </div>
     </div>
+    </form>
   </div>
 </div>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="email.js"></script>
 <script>
 // Scroll nav
 window.addEventListener('scroll', () => {
@@ -484,23 +492,58 @@ function showStep(id) {
   document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-function goStep1() { showStep('step1'); checkStep1(); }
-function goStep2() { showStep('step2'); checkStep2(); }
+function goStep1() { setFormStatus(''); showStep('step1'); checkStep1(); }
+function goStep2() { setFormStatus(''); showStep('step2'); checkStep2(); }
 function goSuccess() {
   document.getElementById('confirm-email').textContent = document.getElementById('f-email').value;
   showStep('step-success');
 }
 
+function setFormStatus(message) {
+  document.getElementById('form-status').textContent = message || '';
+}
+
+async function sendContactForm(event) {
+  event.preventDefault();
+  if (!checkStep2()) return;
+
+  const sendButton = document.getElementById('btn-send');
+  const originalText = sendButton.textContent;
+  sendButton.disabled = true;
+  sendButton.textContent = 'Enviando...';
+  setFormStatus('');
+
+  try {
+    await sendLeadEmail({
+      name: document.getElementById('f-name').value.trim(),
+      email: document.getElementById('f-email').value.trim(),
+      phone: document.getElementById('f-phone').value.trim(),
+      company: document.getElementById('f-company').value.trim(),
+      sector: document.getElementById('f-sector').value,
+      message: document.getElementById('f-message').value.trim()
+    });
+    goSuccess();
+    document.getElementById('lead-form').reset();
+  } catch (error) {
+    console.error('Erro ao enviar email:', error);
+    setFormStatus('Nao foi possivel enviar agora. Tente novamente em alguns instantes.');
+  } finally {
+    sendButton.textContent = originalText;
+    checkStep2();
+  }
+}
+
 function checkStep1() {
   const ok = document.getElementById('f-name').value.trim() &&
-             document.getElementById('f-company').value.trim() &&
-             document.getElementById('f-email').value.trim();
+             document.getElementById('f-email').value.trim() &&
+             document.getElementById('f-phone').value.trim();
   document.getElementById('btn-next').disabled = !ok;
+  return Boolean(ok);
 }
 function checkStep2() {
-  const ok = document.getElementById('f-sector').value &&
-             document.getElementById('f-challenge').value.trim();
+  const ok = document.getElementById('f-message').value.trim();
   document.getElementById('btn-send').disabled = !ok;
+  return Boolean(ok);
 }
 
 // Hero reveal on load
