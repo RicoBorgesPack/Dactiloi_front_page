@@ -11,6 +11,7 @@
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;color:#1a1a2e;background:#fff;line-height:1.6}
 button{font-family:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
 input,select,textarea{font-family:inherit}
 
 /* NAV */
@@ -21,7 +22,7 @@ input,select,textarea{font-family:inherit}
 .nav-logo span{font-weight:800;font-size:18px;letter-spacing:-.5px;color:#fff;transition:color .3s}
 #nav.scrolled .nav-logo span{color:#1a1a2e}
 .nav-links{display:flex;gap:4px;align-items:center}
-.nav-link{background:none;border:none;font-size:14px;font-weight:500;color:rgba(255,255,255,.85);padding:6px 12px;border-radius:6px;transition:color .3s}
+.nav-link{display:inline-flex;align-items:center;background:none;border:none;font-size:14px;font-weight:500;color:rgba(255,255,255,.85);padding:6px 12px;border-radius:6px;transition:color .3s}
 #nav.scrolled .nav-link{color:#444}
 .nav-cta{background:#e8c840;color:#1a1a2e;border:none;border-radius:8px;padding:9px 20px;font-size:14px;font-weight:700}
 .nav-cta:hover{background:#d4b430}
@@ -46,7 +47,7 @@ input,select,textarea{font-family:inherit}
 .hero-stat-lbl{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
 
 /* SECTIONS */
-section{padding:6rem 2rem}
+section{padding:6rem 2rem;scroll-margin-top:64px}
 .section-inner{max-width:1100px;margin:0 auto}
 .section-inner-md{max-width:900px;margin:0 auto}
 .section-inner-sm{max-width:860px;margin:0 auto}
@@ -192,10 +193,10 @@ footer p{margin:0 0 4px}
       <span>Daktyloi</span>
     </div>
     <div class="nav-links">
-      <button class="nav-link" onclick="scrollTo('solucoes')">Soluções</button>
-      <button class="nav-link" onclick="scrollTo('setores')">Setores</button>
-      <button class="nav-link" onclick="scrollTo('processo')">Processo</button>
-      <button class="nav-link" onclick="scrollTo('planos')">Planos</button>
+      <a class="nav-link" href="#solucoes">Soluções</a>
+      <a class="nav-link" href="#setores">Setores</a>
+      <a class="nav-link" href="#processo">Processo</a>
+      <a class="nav-link" href="#planos">Planos</a>
       <button class="nav-cta" onclick="openModal()">Falar com especialista</button>
     </div>
   </div>
@@ -212,7 +213,7 @@ footer p{margin:0 0 4px}
     <p class="hero-sub">Implementamos LLMs privados na infraestrutura da sua empresa. Seus dados permanecem sob seu controle — sem envio a terceiros, sem dependência de nuvem externa.</p>
     <div class="hero-btns">
       <button class="btn-primary" onclick="openModal()">Solicitar diagnóstico gratuito →</button>
-      <button class="btn-ghost" onclick="scrollTo('processo')">Ver como funciona</button>
+      <button class="btn-ghost" onclick="scrollToSection('processo')">Ver como funciona</button>
     </div>
     <div class="hero-stats">
       <div><div class="hero-stat-val">100%</div><div class="hero-stat-lbl">Dados servidor gerenciado</div></div>
@@ -465,7 +466,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Smooth scroll
-function scrollTo(id) {
+function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
 }
 
