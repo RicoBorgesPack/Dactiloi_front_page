@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dactyloi — IA empresarial para o seu negócio</title>
+<title>Daktyloi — IA empresarial para o seu negócio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -180,6 +180,30 @@ footer p{margin:0 0 4px}
   .hero-stats{gap:2rem}
   .process-line{display:none}
 }
+
+/* Product demonstration */
+.hero-product{position:relative;width:min(1100px,100%);margin:48px auto 0;text-align:left}
+.hero-product img{display:block;width:100%;border:1px solid #405464;border-radius:16px;box-shadow:0 32px 90px #0005}
+.hero-product figcaption{text-align:center;margin-top:16px;font-size:12px;color:#b0c7c9}
+#produto{background:#f4f7f6}
+.product-kicker{color:#258269}
+.product-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.product-tab{background:#fff;border:1px solid #d8e2de;border-radius:9px;padding:12px 20px;color:#53615c;font-weight:600;font-size:14px}
+.product-tab[aria-selected="true"]{background:#17352e;border-color:#17352e;color:#a2eace}
+.product-panel img{display:block;width:100%;border-radius:16px;box-shadow:0 20px 60px #14352c20}
+.product-panel[hidden]{display:none}
+.product-caption{display:flex;justify-content:space-between;gap:24px;margin-top:25px;align-items:flex-start}
+.product-caption h3{font-size:20px;letter-spacing:-.5px;margin-bottom:8px}
+.product-caption p{font-size:14px;color:#596860;max-width:660px}
+.product-caption a{color:#23765c;font-weight:600;font-size:14px;white-space:nowrap}
+.product-note{font-size:12px;color:#6b7971;text-align:center;margin-top:28px}
+.product-note a{text-decoration:underline}
+.product-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;border-top:1px solid #dce5df;padding-top:30px}
+.product-flow strong{display:block;font-size:15px;margin-bottom:8px}.product-flow p{font-size:13px;color:#64746b}
+button:focus-visible,a:focus-visible{outline:3px solid #37af8b;outline-offset:4px}
+@media(max-width:640px){.hero-product{margin-top:32px}.product-caption{flex-direction:column;gap:16px}.product-flow{grid-template-columns:1fr}.product-tab{padding:10px 12px;font-size:12px}#hero{padding-bottom:3rem}.hero-stats{margin-top:2.5rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
+
 </style>
 </head>
 <body>
@@ -193,9 +217,10 @@ footer p{margin:0 0 4px}
         <path d="M8 24 L12 8 L16 18 L20 12 L24 24" stroke="#72d8b6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         <circle cx="16" cy="18" r="2" fill="#72d8b6"/>
       </svg>
-      <span>Dactyloi</span>
+      <span>Daktyloi</span>
     </div>
     <div class="nav-links">
+      <a class="nav-link" href="#produto">O produto</a>
       <a class="nav-link" href="#solucoes">Soluções</a>
       <a class="nav-link" href="#setores">Setores</a>
       <a class="nav-link" href="#processo">Processo</a>
@@ -215,8 +240,8 @@ footer p{margin:0 0 4px}
     <h1 class="hero-h1">IA que entende<br><span>o seu negócio.</span></h1>
     <p class="hero-sub">Um hub de IA e consultoria para levar inteligência artificial ao trabalho da sua empresa. Use modelos públicos ou privados, conecte seus sistemas e defina as regras de acesso.</p>
     <div class="hero-btns">
-      <button class="btn-primary" onclick="openModal()">Conhecer a plataforma →</button>
-      <button class="btn-ghost" onclick="scrollToSection('processo')">Explorar soluções</button>
+      <button class="btn-primary" onclick="scrollToSection('produto')">Explorar o Hub de IA →</button>
+      <button class="btn-ghost" onclick="openModal()">Agendar uma conversa</button>
     </div>
     <div class="hero-stats">
       <div><div class="hero-stat-val">Privada</div><div class="hero-stat-lbl">Opção na sua infraestrutura</div></div>
@@ -225,15 +250,37 @@ footer p{margin:0 0 4px}
       <div><div class="hero-stat-val">Sob medida</div><div class="hero-stat-lbl">Consultoria para sua empresa</div></div>
     </div>
   </div>
+  <figure class="hero-product"><img src="assets/hub-chat.svg" alt="Prévia do Hub Daktyloi: chat empresarial com modelos, agentes e documentos." width="1200" height="740" fetchpriority="high"><figcaption>Uma visão do Hub Daktyloi · demonstração ilustrativa com dados fictícios</figcaption></figure>
+</section>
+
+<!-- PRODUCT MVP -->
+<section id="produto">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <span class="section-label product-kicker">Conheça o produto · visão do MVP</span>
+      <h2 class="section-h2">Toda a IA da sua empresa.<br>Um único lugar para trabalhar.</h2>
+      <p class="section-sub">Da pergunta ao próximo passo: converse com documentos, encontre o agente certo e organize o acesso da equipa no Hub Daktyloi.</p>
+    </div>
+    <div class="product-tabs" role="tablist" aria-label="Telas do Hub de IA">
+      <button class="product-tab" id="tab-chat" role="tab" aria-selected="true" aria-controls="panel-chat" data-view="chat">01 · Chat com contexto</button>
+      <button class="product-tab" id="tab-agents" role="tab" aria-selected="false" aria-controls="panel-agents" tabindex="-1" data-view="agents">02 · Agentes da equipa</button>
+      <button class="product-tab" id="tab-governance" role="tab" aria-selected="false" aria-controls="panel-governance" tabindex="-1" data-view="governance">03 · Gestão e acessos</button>
+    </div>
+    <div class="product-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat" tabindex="0" ><figure><img src="assets/hub-chat.svg" alt="Tela ilustrativa de chat do Hub Daktyloi, com seleção de modelo, relatório anexado e resposta com fontes." width="1200" height="740" loading="lazy"><figcaption class="product-caption"><div><h3>Converse com o conhecimento da empresa.</h3><p>Anexe um relatório, escolha o modelo e receba uma resposta com referências aos documentos. O exemplo mostra como transformar informação comercial em prioridades para a equipa.</p></div><a href="assets/hub-chat.svg" target="_blank" rel="noopener">Ampliar tela ↗</a></figcaption></figure></div>
+<div class="product-panel" id="panel-agents" role="tabpanel" aria-labelledby="tab-agents" tabindex="0" hidden><figure><img src="assets/hub-agents.svg" alt="Tela ilustrativa do catálogo de agentes comercial, operações, pessoas e assistente interno." width="1200" height="740" loading="lazy"><figcaption class="product-caption"><div><h3>Um agente para cada contexto.</h3><p>Reúna assistentes de comercial, operações e pessoas em um catálogo comum. Cada agente parte de instruções e fontes adequadas à sua área.</p></div><a href="assets/hub-agents.svg" target="_blank" rel="noopener">Ampliar tela ↗</a></figcaption></figure></div>
+<div class="product-panel" id="panel-governance" role="tabpanel" aria-labelledby="tab-governance" tabindex="0" hidden><figure><img src="assets/hub-governance.svg" alt="Tela ilustrativa de gestão do workspace, com métricas fictícias e acessos por equipa." width="1200" height="740" loading="lazy"><figcaption class="product-caption"><div><h3>O controlo também faz parte da experiência.</h3><p>Visualize membros, agentes e fontes de conhecimento. A proposta de gestão permite definir o uso de modelos públicos e privados por equipa, conforme a implantação.</p></div><a href="assets/hub-governance.svg" target="_blank" rel="noopener">Ampliar tela ↗</a></figcaption></figure></div>
+    <p class="product-note">Telas ilustrativas do MVP, com dados fictícios e respostas simuladas. Referência de interface: <a href="https://www.librechat.ai/" target="_blank" rel="noopener">LibreChat</a>. Funcionalidades sujeitas à validação e configuração.</p>
+    <div class="product-flow"><div><strong>01 / Escolha o contexto</strong><p>Selecione o modelo e o agente que fazem sentido para a tarefa.</p></div><div><strong>02 / Traga o conhecimento</strong><p>Use documentos da empresa como ponto de partida para a conversa.</p></div><div><strong>03 / Avance com a equipa</strong><p>Transforme a resposta em uma proposta, análise ou próximo passo.</p></div></div>
+  </div>
 </section>
 
 <!-- DIFFERENTIALS -->
 <section id="solucoes">
   <div class="section-inner">
     <div class="section-head reveal">
-      <span class="section-label">Por que Dactyloi</span>
+      <span class="section-label">Por que Daktyloi</span>
       <h2 class="section-h2">Uma plataforma para usar IA<br>com contexto e controle.</h2>
-      <p class="section-sub">A Dactyloi combina modelos, agentes e integrações com as regras de privacidade e governança da sua organização.</p>
+      <p class="section-sub">A Daktyloi combina modelos, agentes e integrações com as regras de privacidade e governança da sua organização.</p>
     </div>
     <div class="diff-grid">
       <div class="diff-card reveal" style="transition-delay:0ms">
@@ -348,10 +395,10 @@ footer p{margin:0 0 4px}
       <rect width="32" height="32" rx="8" fill="#72d8b6"/>
       <path d="M8 24 L12 8 L16 18 L20 12 L24 24" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>
-    <span>Dactyloi</span>
+    <span>Daktyloi</span>
   </div>
   <p>Plataforma de IA e consultoria empresarial · Brasil</p>
-  <p>© 2026 Dactyloi. Todos os direitos reservados.</p>
+  <p>© 2026 Daktyloi. Todos os direitos reservados.</p>
 </footer>
 
 <!-- MODAL -->
@@ -367,7 +414,7 @@ footer p{margin:0 0 4px}
         <div class="progress-bar active" id="pb1"></div>
         <div class="progress-bar" id="pb2"></div>
       </div>
-      <h2 class="modal-h2">Fale com a Dactyloi</h2>
+      <h2 class="modal-h2">Fale com a Daktyloi</h2>
       <p class="modal-sub">Conte um pouco sobre a sua empresa e o que procura em IA.</p>
       <input class="modal-input" type="text" id="f-name" name="name" placeholder="Nome completo" autocomplete="name" oninput="checkStep1()"/>
       <input class="modal-input" type="email" id="f-email" name="email" placeholder="E-mail corporativo" autocomplete="email" oninput="checkStep1()"/>
@@ -412,6 +459,28 @@ footer p{margin:0 0 4px}
 <script src="email.config.js"></script>
 <script src="email.js"></script>
 <script>
+// Accessible product tabs
+const productTabs = [...document.querySelectorAll('.product-tab')];
+function selectProductTab(tab) {
+  productTabs.forEach(item => {
+    const active = item === tab;
+    item.setAttribute('aria-selected', String(active));
+    item.tabIndex = active ? 0 : -1;
+    document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
+  });
+}
+productTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => selectProductTab(tab));
+  tab.addEventListener('keydown', event => {
+    let next;
+    if (event.key === 'ArrowRight') next = (index + 1) % productTabs.length;
+    if (event.key === 'ArrowLeft') next = (index + productTabs.length - 1) % productTabs.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = productTabs.length - 1;
+    if (next !== undefined) { event.preventDefault(); selectProductTab(productTabs[next]); productTabs[next].focus(); }
+  });
+});
+
 // Scroll nav
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
