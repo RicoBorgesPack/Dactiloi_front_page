@@ -1,6 +1,3 @@
-# EmailJS local credentials
-email.config.js
-
 # Environment files
 .env
 .env.*

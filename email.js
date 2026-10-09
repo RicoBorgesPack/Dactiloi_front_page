@@ -33,7 +33,7 @@ function buildLeadTemplateParams(lead) {
 
 function sendLeadEmail(lead) {
   if (!window.emailjs) {
-    return Promise.reject(new Error('EmailJS SDK nao foi carregado.'));
+    return Promise.reject(new Error('O SDK do EmailJS não foi carregado.'));
   }
 
   const hasConfig = EMAILJS_CONFIG.publicKey &&
@@ -52,10 +52,10 @@ function sendLeadEmail(lead) {
     EMAILJS_CONFIG.templateId,
     templateParams
   ).then(function(response) {
-    console.log('Email enviado com sucesso!', response.status, response.text);
+    console.log('E-mail enviado com sucesso!', response.status, response.text);
     return response;
   }, function(error) {
-    console.error('Erro ao enviar email:', error);
+    console.error('Erro ao enviar e-mail:', error);
     throw error;
   });
 }
