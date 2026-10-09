@@ -192,6 +192,17 @@ button:focus-visible,a:focus-visible{outline:3px solid #37af8b;outline-offset:4p
 .accounting-note{font-size:13px;color:#666;margin-top:24px;padding:18px;border-left:3px solid #72d8b6;background:#fff}
 @media(max-width:640px){.accounting-grid{grid-template-columns:1fr}.sector-grid{grid-template-columns:1fr}.process-item{gap:16px}.process-head{flex-wrap:wrap}.nav-cta{padding:9px 12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}}
+
+.accounting-card h3{margin-bottom:18px;font-size:19px;line-height:1.4}
+.accounting-card p{font-size:14px;color:#555;margin-top:14px}
+.accounting-gallery{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(0,1fr);gap:24px;margin-top:48px;align-items:start}
+.accounting-demo{min-width:0;background:#fff;border:1px solid #e2e8e3;border-radius:16px;overflow:hidden}
+.accounting-demo-heading{padding:24px}.accounting-demo-heading h3{font-size:18px;line-height:1.45}
+.accounting-demo img{display:block;width:100%;height:auto;border-top:1px solid #e2e8e3;border-bottom:1px solid #e2e8e3}
+.accounting-demo a{display:block}.accounting-demo a:hover{filter:brightness(.97)}
+.accounting-demo figcaption{padding:20px;font-size:12px;color:#555;line-height:1.7}
+.accounting-details{margin-top:32px;grid-template-columns:1fr 1fr}
+@media(max-width:760px){.accounting-grid,.accounting-gallery{grid-template-columns:1fr}.accounting-gallery{gap:24px}.accounting-demo:nth-child(2) img{max-width:320px;margin:auto}.accounting-demo-heading{padding:20px}section{padding-left:20px;padding-right:20px}}
 </style>
 </head>
 <body>
@@ -245,7 +256,49 @@ button:focus-visible,a:focus-visible{outline:3px solid #37af8b;outline-offset:4p
 <!-- FOCUS -->
 <section id="setores" style="background:#fff"><div class="section-inner"><div class="section-head reveal"><span class="section-label">Onde a consultoria atua</span><h2 class="section-h2">Conhecimento especializado.<br>Aplicações para o dia a dia.</h2><p class="section-sub">Priorizamos situações em que documentos, processos e experiência da equipe precisam trabalhar juntos.</p></div><div class="sector-grid"><div class="sector-card reveal"><span class="sector-icon" aria-hidden="true">▤</span><div><h3 class="sector-title">Contabilidade</h3><p class="sector-desc">Organização de normas e preparação de uma base de conhecimento para apoiar consultas técnicas.</p></div></div><div class="sector-card reveal"><span class="sector-icon" aria-hidden="true">◎</span><div><h3 class="sector-title">Conhecimento interno</h3><p class="sector-desc">Projetos para tornar manuais, políticas e procedimentos mais acessíveis às equipes.</p></div></div><div class="sector-card reveal"><span class="sector-icon" aria-hidden="true">↗</span><div><h3 class="sector-title">Processos empresariais</h3><p class="sector-desc">Diagnóstico de tarefas repetitivas e planejamento de automações e integrações conforme o escopo.</p></div></div></div></div></section>
 
-<section id="contabilidade"><div class="section-inner"><div class="section-head reveal"><span class="section-label">Projeto em desenvolvimento · RAGContabilidade</span><h2 class="section-h2">O conhecimento contábil<br>como ponto de partida.</h2><p class="section-sub">Um projeto para preparar normas contábeis para consulta com IA, preservando a origem dos documentos e criando uma base para validar respostas com profissionais da área.</p></div><div class="accounting-grid"><div class="accounting-body reveal"><span class="accounting-status">Base documental e preparação para busca</span><h3>Menos informação dispersa. Mais contexto para consultar.</h3><p>O RAGContabilidade reúne textos de Normas Brasileiras de Contabilidade, incluindo temas como estoques, ativo imobilizado e apresentação de demonstrações contábeis.</p><p>O trabalho atual organiza esses documentos em trechos e registra sua origem. Essa preparação é a base para localizar conteúdo relevante e, em uma próxima etapa, apoiar respostas acompanhadas das fontes utilizadas.</p><p>A consultoria conecta essa base ao caso de uso: entender as perguntas da equipe, definir os documentos necessários e avaliar a qualidade das respostas antes de ampliar a utilização.</p><button class="nav-cta" onclick="openModal()">Conversar sobre IA na contabilidade →</button></div><div class="accounting-card reveal"><h3 style="margin-bottom:18px">Como o projeto está estruturado</h3><ol><li><strong>Reunir as normas.</strong> Textos organizados em uma base documental contábil.</li><li><strong>Preparar o conhecimento.</strong> Divisão em trechos com sobreposição, mantendo metadados do documento de origem.</li><li><strong>Preparar a busca.</strong> O código permite gerar um índice vetorial para recuperar trechos por contexto.</li><li><strong>Validar o assistente.</strong> Próxima etapa: avaliar consultas, referências e respostas com especialistas.</li></ol></div></div><p class="accounting-note">Estágio atual: preparação documental e código de indexação. A interface de consulta e a geração de respostas ainda precisam ser implementadas e validadas. A proposta é apoiar o trabalho do profissional contábil, com revisão técnica das respostas.</p></div></section>
+<section id="contabilidade"><div class="section-inner">
+  <div class="section-head reveal">
+    <span class="section-label">RAG Contabilidade · demonstração do produto</span>
+    <h2 class="section-h2">Da pergunta contábil<br>à resposta com fontes.</h2>
+    <p class="section-sub">Consulte as normas da sua base, leia os trechos que fundamentam a resposta e confira cálculos com regras documentadas. Tudo em uma interface web.</p>
+  </div>
+  <div class="accounting-grid">
+    <div class="accounting-body reveal">
+      <span class="accounting-status">Interface web disponível em versão de demonstração</span>
+      <h3>Você pergunta. A base traz o contexto.</h3>
+      <p>Descreva sua dúvida e informe o contexto e o período contábil. O RAG busca trechos nas normas cadastradas e usa esse conteúdo para apoiar a resposta da IA.</p>
+      <p>A resposta aparece ao lado das evidências: referências numeradas, documento de origem e trechos que você pode abrir para conferir. É possível copiar a resposta e iniciar uma nova consulta.</p>
+      <p>O histórico fica temporariamente na página. Cada consulta é independente: as perguntas anteriores não são enviadas ao modelo.</p>
+      <button class="nav-cta" onclick="openModal()">Conhecer o projeto com a equipe →</button>
+    </div>
+    <div class="accounting-card reveal">
+      <h3>Como usar a consulta</h3>
+      <ol>
+        <li><strong>Descreva a situação.</strong> Por exemplo: “Como tratar a depreciação de um ativo imobilizado neste período?”</li>
+        <li><strong>Escolha quantos trechos recuperar.</strong> Clique em “Consultar base” para buscar contexto nos documentos.</li>
+        <li><strong>Leia a resposta e confira as fontes.</strong> Use as referências e “Ler trecho completo” para avaliar a fundamentação.</li>
+        <li><strong>Continue seu trabalho.</strong> Copie a resposta para revisão ou use “Nova consulta” para outra pergunta.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="accounting-gallery">
+    <figure class="accounting-demo reveal">
+      <div class="accounting-demo-heading"><span class="accounting-status">01 · Consulta no desktop</span><h3>Pergunta, resposta e evidências no mesmo lugar.</h3></div>
+      <a href="assets/rag-contabilidade-consulta.png" target="_blank" rel="noopener" aria-label="Ampliar captura da consulta contábil em demonstração"><img src="assets/rag-contabilidade-consulta.png" width="1280" height="1641" loading="lazy" alt="Interface de consulta com campo de pergunta, quantidade de trechos, resposta com referência numerada e painel de evidências."/></a>
+      <figcaption>Captura real dos testes em modo de demonstração, com resposta e norma sintéticas. O texto de teste exibido na resposta não é orientação contábil. Clique na imagem para ampliar.</figcaption>
+    </figure>
+    <figure class="accounting-demo reveal">
+      <div class="accounting-demo-heading"><span class="accounting-status">02 · Calculadora no celular</span><h3>Entradas claras para um cálculo fundamentado.</h3></div>
+      <a href="assets/rag-contabilidade-calculadora.png" target="_blank" rel="noopener" aria-label="Ampliar captura da calculadora em demonstração"><img src="assets/rag-contabilidade-calculadora.png" width="320" height="1684" loading="lazy" alt="Calculadora na interface móvel com seleção de regra revisada, base de cálculo, data de aplicação, regime e jurisdição."/></a>
+      <figcaption>Captura real da calculadora em demonstração, antes de selecionar uma regra. O formulário se adapta à tela do celular. Clique para ampliar.</figcaption>
+    </figure>
+  </div>
+  <div class="accounting-grid accounting-details">
+    <div class="accounting-card reveal"><h3>Cálculos com regras revisadas</h3><p>Selecione uma regra, informe a base e a data e confira o regime e a jurisdição. O resultado apresenta valor, fórmula, parâmetros, fonte, vigência e responsável pela revisão.</p><p>O cálculo é feito por um motor decimal, sem geração pela IA. A fórmula suportada é <strong>máximo entre zero e (base × alíquota − dedução)</strong>, com arredondamento ao centavo.</p><p><strong>No modo real, ainda não há regras tributárias habilitadas.</strong> Elas dependem de legislação cadastrada e revisão profissional. A demonstração utiliza uma regra fictícia.</p></div>
+    <div class="accounting-card reveal"><h3>O que já está disponível</h3><p>Interface de consulta e calculadora, respostas com referências, leitura de evidências, cópia de respostas e histórico temporário. A base do projeto reúne 23 documentos de normas contábeis.</p><p>A demonstração funciona com dados sintéticos, sem chamar o modelo. Consultas reais exigem uma base indexada e um modelo configurado pela equipe; pergunta e trechos são enviados ao provedor e podem gerar cobrança.</p><p>O projeto está em fase de prova de conceito. A geração com um modelo real ainda precisa ser validada com profissionais da área.</p></div>
+  </div>
+  <p class="accounting-note">Use as respostas como apoio à análise profissional e confira os trechos antes de decidir. Uma referência não garante a correção da resposta nem a vigência da norma. A base contábil não comprova cobertura tributária completa; a calculadora não aplica automaticamente tabelas progressivas, Simples Nacional ou regimes especiais.</p>
+</div></section>
 
 <!-- HOW IT WORKS -->
 <section id="processo"><div class="section-inner-md"><div class="section-head reveal"><span class="section-label">Do diagnóstico à evolução</span><h2 class="section-h2">Um caminho claro para<br>colocar a IA em prática.</h2><p class="section-sub">A consultoria é o primeiro passo: validar necessidades e construir aplicações úteis antes de ampliar o uso de IA na organização.</p></div><div class="process-wrap"><div class="process-line"></div><div class="process-item reveal"><div class="process-num first">01</div><div class="process-body"><div class="process-head"><span class="process-title">Diagnóstico</span></div><p class="process-desc">Mapeamos processos, documentos e requisitos. Definimos o caso de uso prioritário e os critérios de sucesso.</p></div></div><div class="process-item reveal"><div class="process-num ">02</div><div class="process-body"><div class="process-head"><span class="process-title">Arquitetura</span></div><p class="process-desc">Escolhemos a abordagem, os modelos e a infraestrutura. Planejamos segurança, acesso aos dados e integrações necessárias.</p></div></div><div class="process-item reveal"><div class="process-num ">03</div><div class="process-body"><div class="process-head"><span class="process-title">Projeto piloto</span></div><p class="process-desc">Preparamos a base de conhecimento e desenvolvemos a solução para um escopo delimitado, com validação por especialistas.</p></div></div><div class="process-item reveal"><div class="process-num ">04</div><div class="process-body"><div class="process-head"><span class="process-title">Implantação e treinamento</span></div><p class="process-desc">Apoiamos a entrada em operação, documentamos a solução e preparamos a equipe para utilizá-la.</p></div></div><div class="process-item reveal"><div class="process-num last">05</div><div class="process-body"><div class="process-head"><span class="process-title">Acompanhamento</span></div><p class="process-desc">Revisamos resultados, ajustamos o conhecimento e planejamos novos casos de uso conforme as necessidades da empresa.</p></div></div></div></div></section>
